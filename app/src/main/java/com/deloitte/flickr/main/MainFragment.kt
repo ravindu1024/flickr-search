@@ -6,18 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import com.deloitte.flickr.R
-import com.deloitte.flickr.common.ViewState
+import com.deloitte.flickr.common.*
 import com.deloitte.flickr.databinding.FragmentMainBinding
-import com.deloitte.flickr.common.createViewModel
-import com.deloitte.flickr.common.factories
-import com.deloitte.flickr.common.hideKeyboard
-import com.deloitte.flickr.details.DetailFragment
 import com.google.android.material.snackbar.Snackbar
 
-class MainFragment: Fragment() {
+class MainFragment : Fragment(), StringResourceProvider {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var viewModel: MainViewModel
@@ -29,7 +23,7 @@ class MainFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(layoutInflater)
-        viewModel = createViewModel { MainViewModel(factories().getImagesUseCase) }
+        viewModel = createViewModel { MainViewModel(factories().getImagesUseCase, this) }
 
         setupUi()
 
@@ -42,18 +36,21 @@ class MainFragment: Fragment() {
         bindViews()
     }
 
-    private fun setupUi(){
+    private fun setupUi() {
         binding.photoList.layoutManager = GridLayoutManager(requireContext(), 3)
         binding.photoList.adapter = adapter
     }
 
-    private fun bindViews(){
-        viewModel.photoList.observe(requireActivity()){ photos ->
+    private fun bindViews() {
+
+        // Photo results
+        viewModel.photoList.observe(requireActivity()) { photos ->
             adapter.updatePhotos(photos)
         }
 
+        // Search and Paging
         binding.editSearchTerm.setOnKeyListener { _, keyCode, event ->
-            if(event.action == KeyEvent.ACTION_UP && (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_SEARCH)){
+            if (event.action == KeyEvent.ACTION_UP && (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_SEARCH)) {
                 hideKeyboard()
                 viewModel.searchImages(binding.editSearchTerm.text.toString(), true)
                 return@setOnKeyListener true
@@ -65,15 +62,16 @@ class MainFragment: Fragment() {
             viewModel.searchImages(binding.editSearchTerm.text.toString(), false)
         }
 
+        // Item click handling
         adapter.itemClickCallback = { photo ->
-            val bundle = Bundle()
-            bundle.putParcelable(DetailFragment.ARG_PHOTO, photo)
-            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.action_mainFragment_to_detailFragment, bundle)
+            navigateToDetail(photo)
         }
 
+        // View states
         viewModel.viewState.observe(requireActivity(), { state ->
             when (state) {
-                ViewState.ShowLoading -> binding.progressBar.visibility = View.VISIBLE
+                is ViewState.InProgress -> binding.progressBar.visibility =
+                    if (state.showLoader) View.VISIBLE else View.GONE
 
                 ViewState.DismissLoading -> binding.progressBar.visibility = View.GONE
 

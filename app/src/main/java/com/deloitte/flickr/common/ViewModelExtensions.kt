@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 
 /**
  * This deprecated method is used to instantiate viewmodel classes. The only reason to use this
- * method is because i'm not using Dagger for this project.
+ * method is because I'm not using Dagger for this project.
  */
 inline fun <reified T : ViewModel> Fragment.createViewModel(crossinline factory: () -> T): T =
     T::class.java.let { clazz ->

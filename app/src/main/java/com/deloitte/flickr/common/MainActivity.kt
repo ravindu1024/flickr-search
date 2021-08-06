@@ -1,9 +1,8 @@
 package com.deloitte.flickr.common
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.deloitte.flickr.R
@@ -22,16 +21,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         navHostFragment.navController.addOnDestinationChangedListener { _, dest, _ ->
             when (dest.id) {
-                R.id.mainFragment -> {
-                    enableToolbarBackButton(false)
-                }
-                else -> {
-                    enableToolbarBackButton(true)
-                }
+                R.id.mainFragment -> enableToolbarBackButton(false)
+                else -> enableToolbarBackButton(true)
             }
         }
     }

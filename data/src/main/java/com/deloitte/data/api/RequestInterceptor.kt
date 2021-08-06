@@ -4,8 +4,8 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 /**
- * Adds the api key as a query param to GET api calls if the api call has the apiKey param added.
- * ie: the api calls where a key is required
+ * Adds the api key as a query param to api calls if it has the apiKey param added. Also adds
+ * a custom key to prevent the flickr api from returning a wrapper around the json response
  *
  * This can be easily modified to handle multiple api keys or keys for different sources
  */
@@ -16,7 +16,7 @@ class RequestInterceptor(private val apiKey: String) : Interceptor {
         val urlBuilder = request.url.newBuilder()
 
         // Adding this to get Flickr to remove the "jsonFlickrApi" wrapper around json responses
-        if(request.method == "GET"){
+        if (request.method == "GET") {
             urlBuilder.addQueryParameter("nojsoncallback", "1")
         }
 

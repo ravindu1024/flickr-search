@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.deloitte.data.api.ApiException
 import com.deloitte.data.models.domain.Photo
 import com.deloitte.data.usecases.SearchPhotosUseCase
+import com.deloitte.flickr.common.StringResourceProvider
 import com.deloitte.flickr.common.ViewState
 import com.deloitte.flickr.main.MainViewModel
 import io.mockk.every
@@ -27,12 +28,12 @@ class MainViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     private val searchUseCase = mockk<SearchPhotosUseCase>()
+    private val stringProvider = mockk<StringResourceProvider>()
     private lateinit var viewModel: MainViewModel
 
     @Before
     fun setup(){
-
-        viewModel = MainViewModel(searchUseCase)
+        viewModel = MainViewModel(searchUseCase, stringProvider)
     }
 
     @Test
@@ -82,6 +83,7 @@ class MainViewModelTest {
     @Test
     fun `search - error`(){
         every { searchUseCase.searchPhotos(any(), 1) } returns Single.error(ApiException())
+        every { stringProvider.getString(any()) } returns "Could not load images"
 
         viewModel.searchImages("cat", true)
 

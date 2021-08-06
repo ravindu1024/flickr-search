@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide
 import com.deloitte.data.models.domain.Photo
 import com.deloitte.flickr.databinding.FragmentDetailBinding
 
-class DetailFragment: Fragment() {
-    companion object{
+class DetailFragment : Fragment() {
+    companion object {
         const val ARG_PHOTO = "ARG_PHOTO"
     }
 
@@ -28,7 +28,7 @@ class DetailFragment: Fragment() {
         return binding.root
     }
 
-    private fun initUi(){
+    private fun initUi() {
         val photo = arguments?.getParcelable(ARG_PHOTO) as? Photo
         photo?.let {
             binding.textTitle.text = it.title

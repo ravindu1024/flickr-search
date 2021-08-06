@@ -3,7 +3,7 @@ package com.deloitte.data.models.mappings
 import com.deloitte.data.models.domain.Photo
 import com.deloitte.data.models.dto.PhotoSearchResponseDto
 
-fun PhotoSearchResponseDto.toDomain(baseUrl: String): List<Photo>{
+fun PhotoSearchResponseDto.toDomain(baseUrl: String): List<Photo> {
 
     return this.photos.map {
         return@map Photo(

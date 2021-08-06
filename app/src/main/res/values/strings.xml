@@ -1,3 +1,16 @@
 <resources>
+<!--    App Common-->
     <string name="app_name">Flickr Search</string>
+    <string name="flickr_api_key">96358825614a5d3b1a1c3fd87fca2b47</string>
+    <string name="flickr_api_baseurl">https://api.flickr.com/</string>
+    <string name="flickr_static_domain">static.flickr.com</string>
+
+<!--    Error Messages-->
+    <string name="error_image_search">Could not load images</string>
+
+<!--    Content Descriptions-->
+    <string name="content_descr_image_detail">Selected image</string>
+
+<!--    Main -->
+    <string name="main_search_hint">Search</string>
 </resources>

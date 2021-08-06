@@ -1,3 +1,3 @@
 package com.deloitte.data.api
 
-class ApiException: Exception()
+class ApiException : Exception()

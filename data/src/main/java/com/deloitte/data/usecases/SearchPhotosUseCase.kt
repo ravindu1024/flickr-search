@@ -7,7 +7,7 @@ import io.reactivex.Single
 
 class SearchPhotosUseCase(private val api: PhotosAPI, private val staticBaseUrl: String) {
 
-    fun searchPhotos(query: String, pageNum: Int): Single<List<Photo>>{
+    fun searchPhotos(query: String, pageNum: Int): Single<List<Photo>> {
         return api.searchImages(query, page = pageNum, pageSize = 25)
             .map {
                 it.toDomain(staticBaseUrl)
