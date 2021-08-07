@@ -7,7 +7,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.deloitte.flickr.R
 import com.deloitte.flickr.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

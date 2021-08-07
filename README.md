@@ -14,6 +14,5 @@ Either method can be selected depending on how much abstraction is needed and ho
 
 ## Some compromises due to the lack of time
 
-- I haven't used Dagger for DI and just did manual DI from the App class
 - I didn't use a local db like Room or Realm.
 - Unit tests are not 100% exhaustive. Just added some minimal test cases

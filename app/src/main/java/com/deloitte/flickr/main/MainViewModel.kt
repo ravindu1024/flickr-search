@@ -7,11 +7,14 @@ import com.deloitte.data.usecases.SearchPhotosUseCase
 import com.deloitte.flickr.R
 import com.deloitte.flickr.common.StringResourceProvider
 import com.deloitte.flickr.common.ViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val searchUseCase: SearchPhotosUseCase,
     private val stringProvider: StringResourceProvider
 ) : ViewModel() {

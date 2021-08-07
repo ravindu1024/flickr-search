@@ -6,15 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.deloitte.flickr.common.*
 import com.deloitte.flickr.databinding.FragmentMainBinding
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment : Fragment(), StringResourceProvider {
 
     private lateinit var binding: FragmentMainBinding
-    private lateinit var viewModel: MainViewModel
+
+    private val viewModel: MainViewModel by viewModels()
     private val adapter by lazy { MainPhotoAdapter(requireContext()) }
 
     override fun onCreateView(
@@ -23,7 +27,6 @@ class MainFragment : Fragment(), StringResourceProvider {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(layoutInflater)
-        viewModel = createViewModel { MainViewModel(factories().getImagesUseCase, this) }
 
         setupUi()
 
